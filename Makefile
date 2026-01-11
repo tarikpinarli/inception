@@ -9,7 +9,11 @@ all: up
 up:
 	@mkdir -p /home/tpinarli/data/wordpress
 	@mkdir -p /home/tpinarli/data/mariadb
-	@docker compose -f $(COMPOSE_FILE) up -d --build
+	@if [ ! -f ./srcs/.env ]; then \
+		echo "Copying .env.sample to .env..."; \
+		cp ./srcs/.env.sample ./srcs/.env; \
+	fi
+	@docker compose -f ./srcs/docker-compose.yml up -d --build
 
 # Stop the containers
 down:
