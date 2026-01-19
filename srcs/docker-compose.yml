@@ -59,10 +59,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/tpinarli/data/wordpress
+      device: ${DATA_PATH}/wordpress
+
   mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/tpinarli/data/mariadb
+      device: ${DATA_PATH}/mariadb

@@ -1,10 +1,18 @@
 COMPOSE_FILE = ./srcs/docker-compose.yml
-DATA_PATH = /home/tpinarli/data
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	DATA_PATH = /Users/tarikpinarli/data
+else
+	DATA_PATH = /home/tpinarli/data
+endif
 
 all: up
 
 # Create the data directories and start the containers
 up:
+	@echo "Detected OS: $(UNAME_S)"
+	@echo "Using Data Path: $(DATA_PATH)"
 	@mkdir -p $(DATA_PATH)/wordpress
 	@mkdir -p $(DATA_PATH)/mariadb
 	@if [ ! -f ./srcs/.env ]; then \
@@ -12,22 +20,23 @@ up:
 		cp ./srcs/.env.sample ./srcs/.env; \
 	fi
 	@echo "Starting containers..."
-	@docker compose -f $(COMPOSE_FILE) up -d --build
+	@DATA_PATH=$(DATA_PATH) docker compose -f $(COMPOSE_FILE) up -d --build
 
 # Stop the containers
 down:
 	@echo "Stopping containers..."
-	@docker compose -f $(COMPOSE_FILE) down
+	@DATA_PATH=$(DATA_PATH) docker compose -f $(COMPOSE_FILE) down
 
 clean:
 	@echo "Cleaning Docker resources..."
-	@docker compose -f $(COMPOSE_FILE) down -v
+	@DATA_PATH=$(DATA_PATH) docker compose -f $(COMPOSE_FILE) down -v
 
 # Deep clean: remove images, volumes, and networks
 fclean: clean
 	@echo "Deep cleaning (Pruning system + Deleting Data)..."
 	@docker system prune -af
-	@# This sudo is required because Docker runs as root and owns these files
+	@echo "Deleting data at $(DATA_PATH)..."
+	@# Sudo is usually needed on Linux, might ask for password on Mac
 	@sudo rm -rf $(DATA_PATH)/mariadb/*
 	@sudo rm -rf $(DATA_PATH)/wordpress/*
 	@echo "Project reset complete."
