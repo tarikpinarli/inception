@@ -1,12 +1,9 @@
-# Path to the compose file
 COMPOSE_FILE = ./srcs/docker-compose.yml
-# Variables for paths (Cleaner)
 DATA_PATH = /home/tpinarli/data
-# Default target
+
 all: up
 
 # Create the data directories and start the containers
-# Note: "docker compose" (space) instead of "docker-compose" (hyphen)
 up:
 	@mkdir -p $(DATA_PATH)/wordpress
 	@mkdir -p $(DATA_PATH)/mariadb
@@ -22,7 +19,6 @@ down:
 	@echo "Stopping containers..."
 	@docker compose -f $(COMPOSE_FILE) down
 
-# Stop containers and remove volumes (clean)
 clean:
 	@echo "Cleaning Docker resources..."
 	@docker compose -f $(COMPOSE_FILE) down -v

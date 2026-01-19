@@ -49,7 +49,7 @@ if [ ! -f wp-config.php ]; then
         --role=author \
         --user_pass=$WP_USER_PASSWORD \
         --allow-root
-        
+
     echo "WordPress: Configuration finished!"
 fi
 
