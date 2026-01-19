@@ -1,1 +1,9 @@
 srcs/.env
+
+*.key
+*.crt
+*.pem
+
+.DS_Store
+.vscode/
+.idea/
