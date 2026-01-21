@@ -28,7 +28,6 @@ RUN chmod +x /usr/local/bin/make_wordpress.sh
 RUN mkdir -p /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port 9000
 EXPOSE 9000
 
 # Start

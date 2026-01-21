@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1. CLEANUP (Critical for restart speed)
+# 1. CLEANUP
 rm -f /run/mysqld/mysqld.pid
 rm -f /run/mysqld/mysqld.sock
 
@@ -9,7 +9,7 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql
 
-# 3. SETUP (Runs only once)
+# 3. SETUP
 if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
     echo "MariaDB: Installing..."
     mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null
@@ -25,7 +25,6 @@ EOF
     echo "MariaDB: Setup done."
 fi
 
-# 4. START (The important change)
-# We run the binary DIRECTLY. No wrapper. No mysqld_safe.
+# 4. START
 echo "MariaDB: Starting direct binary..."
 exec /usr/sbin/mysqld --user=mysql --datadir=/var/lib/mysql

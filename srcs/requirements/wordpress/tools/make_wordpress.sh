@@ -53,10 +53,7 @@ if [ ! -f wp-config.php ]; then
     echo "WordPress: Configuration finished!"
 fi
 
-# --- CRITICAL FIX: Give permission to web server ---
-# Without this, NGINX cannot read the files and will give 403 Forbidden
 chown -R www-data:www-data /var/www/html
-# -------------------------------------------------
 
 # 4. Start PHP-FPM
 echo "WordPress: Starting PHP-FPM..."

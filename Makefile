@@ -41,7 +41,6 @@ fclean: clean
 	@sudo rm -rf $(DATA_PATH)/wordpress/*
 	@echo "Project reset complete."
 
-# Rebuild everything
 re: fclean all
 
 .PHONY: all up down clean fclean re
